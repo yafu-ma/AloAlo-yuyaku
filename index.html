@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+
+    <base target="_top">
+
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AloAlo 予約フォーム</title>
+
+    <style>
+
+      body { font-family: sans-serif; padding: 20px; background-color: #f9f9f9; }
+
+      h2 { color: #333; font-size: 20px; border-bottom: 2px solid #5cb85c; padding-bottom: 10px; }
+
+      .box { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
+
+      select, input, button { width: 100%; padding: 12px; font-size: 16px; margin-top: 10px; border-radius: 6px; border: 1px solid #ccc; box-sizing: border-box; }
+
+      button { background-color: #5cb85c; color: white; border: none; font-weight: bold; cursor: pointer; }
+
+      button:disabled { background-color: #ccc; cursor: not-allowed; }
+
+      .remove-btn { background-color: #d9534f; width: auto; padding: 5px 10px; font-size: 12px; margin-left: 10px; }
+
+      ul { list-style-type: none; padding: 0; }
+
+      li { background: #f1f1f1; margin: 5px 0; padding: 10px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; }
+
+      .total-time { font-size: 18px; font-weight: bold; color: #d9534f; text-align: right; }
+
+      
+
+      .page { display: none; }         
+
+      .active-page { display: block; } 
+
+      .back-btn { background-color: #f0ad4e; margin-top: 10px; }
+
+    </style>
+
+  </head>
+
+  <body>
+
+
+
+    <div id="page1" class="page active-page">
+
+      <h2>AloAlo 予約メニュー選択</h2>
+
+      <div class="box">
+
+        <p>ご希望のメニューを選んで追加してください<br><small>※最大3つまで</small></p>
+
+        <select id="menuSelect">
+
+          <option value="" disabled selected>メニューを選択してください</option>
+
+          
+
+          <optgroup label="完全パーソナルメニュー">
+
+            <option value="完全パーソナルメニュー,60">完全パーソナルメニュー (60分)</option>
+
+            <option value="完全パーソナルメニュー,90">完全パーソナルメニュー (90分)</option>
+
+          </optgroup>
+
+          
+
+          <optgroup label="筋骨リバランス-メカバラ">
+
+            <option value="筋骨リバランス 上半身or下半身,60">上半身or下半身 (60分)</option>
+
+            <option value="筋骨リバランス 上半身＆下半身,120">上半身＆下半身 (120分)</option>
+
+            <option value="筋骨リバランス 上半身＆首肩・ヘッド編,90">上半身＆首肩・ヘッド編 (90分)</option>
+
+            <option value="筋骨リバランス 上半身＆腸活・腰痛編,90">上半身＆腸活・腰痛編 (90分)</option>
+
+            <option value="筋骨リバランス 下半身＆腸活・腰痛編,90">下半身＆腸活・腰痛編 (90分)</option>
+
+          </optgroup>
+
+          
+
+          <optgroup label="フェイシャル">
+
+            <option value="フェイシャル 表情筋メソッド,50">表情筋メソッド (50分)</option>
+
+            <option value="フェイシャル シルク糸脱毛（初回）,90">シルク糸脱毛 初回 (90分)</option>
+
+            <option value="フェイシャル シルク糸脱毛（２回目以降）,60">シルク糸脱毛 2回目以降 (60分)</option>
+
+            <option value="フェイシャル 松,90">松 (90分)</option>
+
+            <option value="フェイシャル 竹,70">竹 (70分)</option>
+
+            <option value="フェイシャル 梅,60">梅 (60分)</option>
+
+          </optgroup>
+
+          
+
+          <optgroup label="岩盤ドームサウナ">
+
+            <option value="ドームサウナ,30">ドームサウナ (30分)</option>
+
+            <option value="ドームサウナ,60">ドームサウナ (60分)</option>
+
+            <option value="ペアドーム,30">ペアドーム (30分)</option>
+
+            <option value="ペアドーム,60">ペアドーム (60分)</option>
+
+          </optgroup>
+
+
+
+          <optgroup label="オプション">
+
+            <option value="ハンド,10">ハンド (10分)</option>
+
+            <option value="ヘッド,10">ヘッド (10分)</option>
+
+            <option value="もっとヘッド,20">もっとヘッド (20分)</option>
+
+            <option value="アゴ,20">アゴ (20分)</option>
+
+            <option value="うで,30">うで (30分)</option>
+
+            <option value="寝るだけマイナスイオン,60">寝るだけマイナスイオン (60分)</option>
+
+            <option value="肩甲骨はがし,30">肩甲骨はがし (30分)</option>
+
+          </optgroup>
+
+        </select>
+
+        <button id="addBtn" onclick="addMenu()">追加する</button>
+
+      </div>
+
+
+
+      <div class="box">
+
+        <h3>選択中のメニュー（<span id="menuCount">0</span>/3）</h3>
+
+        <ul id="selectedList"></ul>
+
+        <hr>
+
+        <p>カウンセリング：30分</p>
+
+        <p class="total-time">合計所要時間：<span id="totalTimeDisplay">30</span> 分</p>
+
+      </div>
+
+      <button id="nextBtn" onclick="goToPage2()" disabled>日時選択へ進む</button>
+
+    </div>
+
+
+
+    <div id="page2" class="page">
+
+      <h2>AloAlo ご希望日時の選択</h2>
+
+      <div class="box">
+
+        <p>選択されたメニューの合計時間:<br>
+
+           <span id="page2TotalTime" style="font-size:18px; color:#d9534f; font-weight:bold;">30</span> 分
+
+        </p>
+
+      </div>
+
+
+
+      <div class="box">
+
+        <label for="dateInput"><strong>ご希望の日付：</strong></label>
+
+        <input type="date" id="dateInput">
+
+
+
+        <label for="timeInput" style="margin-top: 15px; display: block;"><strong>ご希望の開始時間：</strong></label>
+
+        <select id="timeInput">
+
+          <option value="" disabled selected>時間を選択してください</option>
+
+          <option value="10:30">10:30</option>
+
+          <option value="11:00">11:00</option>
+
+          <option value="11:30">11:30</option>
+
+          <option value="12:00">12:00</option>
+
+          <option value="12:30">12:30</option>
+
+          <option value="13:00">13:00</option>
+
+          <option value="13:30">13:30</option>
+
+          <option value="14:00">14:00</option>
+
+          <option value="14:30">14:30</option>
+
+          <option value="15:00">15:00</option>
+
+          <option value="15:30">15:30</option>
+
+          <option value="16:00">16:00</option>
+
+          <option value="16:30">16:30</option>
+
+          <option value="17:00">17:00</option>
+
+          <option value="17:30">17:30</option>
+
+          <option value="18:00">18:00</option>
+
+          <option value="18:30">18:30</option>
+
+        </select>
+
+      </div>
+
+      <button id="submitBtn" onclick="submitReservation()">予約を確定する</button>
+
+      <button class="back-btn" onclick="goToPage1()">メニュー選択に戻る</button>
+
+    </div>
+
+
+
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+
+
+    <script>
+
+      const LIFF_ID = "2010309432-IqFGsIWf";
+      let liffReady = false;
+
+    window.onload = function() {
+      alert("onload開始");
+      
+      liff.init({ liffId: LIFF_ID })
+        .then(() => {
+          liffReady = true;
+          alert("init成功！isInClient: " + liff.isInClient());
+        })
+        .catch((err) => {
+          alert("init失敗: " + err.code + " / " + err.message);
+        });
+        
+      alert("init呼び出し完了（応答待ち）");
+    };
+
+      let selectedMenus = [];
+      const BASE_COUNSELING_TIME = 30;
+
+      function addMenu() {
+        const selectElement = document.getElementById("menuSelect");
+        const selectedValue = selectElement.value;
+        if (!selectedValue) return alert("メニューを選んでください！");
+        if (selectedMenus.length >= 3) return alert("メニューは最大3つまでです！");
+        const [name, timeString] = selectedValue.split(",");
+        selectedMenus.push({ name: name, time: parseInt(timeString, 10) });
+        selectElement.value = "";
+        updateUI();
+      }
+
+      function removeMenu(index) {
+        selectedMenus.splice(index, 1);
+        updateUI();
+      }
+
+      function updateUI() {
+        const listElement = document.getElementById("selectedList");
+        listElement.innerHTML = "";
+        let totalMenuTime = 0;
+        selectedMenus.forEach((item, index) => {
+          totalMenuTime += item.time;
+          const li = document.createElement("li");
+          li.innerHTML = `<span>${item.name} (${item.time}分)</span> <button class="remove-btn" onclick="removeMenu(${index})">削除</button>`;
+          listElement.appendChild(li);
+        });
+        const finalTime = selectedMenus.length > 0 ? totalMenuTime + BASE_COUNSELING_TIME : BASE_COUNSELING_TIME;
+        document.getElementById("totalTimeDisplay").innerText = finalTime;
+        document.getElementById("menuCount").innerText = selectedMenus.length;
+        document.getElementById("addBtn").disabled = selectedMenus.length >= 3;
+        document.getElementById("nextBtn").disabled = selectedMenus.length === 0;
+      }
+
+      function goToPage1() {
+        document.getElementById("page2").classList.remove("active-page");
+        document.getElementById("page1").classList.add("active-page");
+      }
+
+      function goToPage2() {
+        document.getElementById("page2TotalTime").innerText = document.getElementById("totalTimeDisplay").innerText;
+        document.getElementById("dateInput").min = new Date().toISOString().split('T')[0];
+        document.getElementById("page1").classList.remove("active-page");
+        document.getElementById("page2").classList.add("active-page");
+      }
+
+      function submitReservation() {
+        if (!liffReady) {
+          return alert("LIFFがまだ初期化されていません。少し待ってから再度押してください。");
+        }
+
+        const date = document.getElementById("dateInput").value;
+        const time = document.getElementById("timeInput").value;
+        if (!date || !time) return alert("日付と時間を選択してください！");
+
+        const menuNames = selectedMenus.map(item => item.name).join(" ＋ ");
+        const totalTime = document.getElementById("page2TotalTime").innerText;
+        const sendText = `【予約リクエスト】\n日時: ${date} ${time}〜\nメニュー: ${menuNames}\n所要時間: ${totalTime}分(カウンセリング込)\n\n※この内容で予約をお願いします！`;
+
+        if (!liff.isInClient()) {
+          return alert("【テスト用】\n\n" + sendText);
+        }
+
+        liff.sendMessages([{ type: 'text', text: sendText }])
+          .then(() => {
+            alert("送信しました！");
+            liff.closeWindow();
+          })
+          .catch((err) => {
+            alert("送信失敗\ncode: " + err.code + "\nmessage: " + err.message);
+          });
+      }
+
+    </script>
+
+  </body>
+
+</html>                                                                                                                                                 
