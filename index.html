@@ -75,7 +75,7 @@
       </div>
 
       <div class="box">
-        <h3>選択中のメニュー（<span id="menuCount">0</span>/3）</h3>
+        <h3>選択中のメニュー（<span id="menuCount">0</span>/5）</h3>
         <ul id="selectedList"></ul>
         <hr>
         <p>カウンセリング：約30分</p>
@@ -170,7 +170,7 @@
         const finalTime = selectedMenus.length > 0 ? totalMenuTime + BASE_COUNSELING_TIME : BASE_COUNSELING_TIME;
         document.getElementById("totalTimeDisplay").innerText = finalTime;
         document.getElementById("menuCount").innerText = selectedMenus.length;
-        document.getElementById("addBtn").disabled = selectedMenus.length >= 3;
+        document.getElementById("addBtn").disabled = selectedMenus.length >= 5;
         document.getElementById("nextBtn").disabled = selectedMenus.length === 0;
       }
 
