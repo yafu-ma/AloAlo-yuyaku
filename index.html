@@ -26,7 +26,7 @@
     <div id="page1" class="page active-page">
       <h2>AloAlo 予約メニュー選択</h2>
       <div class="box">
-        <p>ご希望のメニューを選んで追加してください<br><small>※最大3つまで</small></p>
+        <p>ご希望のメニューを選んで追加してください<br><small>※最大5つまで</small></p>
         <select id="menuSelect">
           <option value="" disabled selected>メニューを選択してください</option>
 
@@ -38,7 +38,8 @@
           <optgroup label="筋骨リバランス-メカバラ">
             <option value="筋骨リバランス 上半身,60">上半身 (60分)</option>
             <option value="筋骨リバランス 下半身,60">下半身 (60分)</option>
-            <option value="筋骨リバランス 上半身＆下半身,120">上半身＆下半身 (120分)</option>
+            <option value="筋骨リバランス 上半身,120">下半身 (120分)</option>
+            <option value="筋骨リバランス 下半身,120">下半身 (120分)</option>
             <option value="筋骨リバランス 上半身＆首肩・ヘッド編,90">上半身＆首肩・ヘッド編 (90分)</option>
             <option value="筋骨リバランス 上半身＆腸活・腰痛編,90">上半身＆腸活・腰痛編 (90分)</option>
             <option value="筋骨リバランス 下半身＆腸活・腰痛編,90">下半身＆腸活・腰痛編 (90分)</option>
@@ -143,8 +144,8 @@
       function addMenu() {
         const selectElement = document.getElementById("menuSelect");
         const selectedValue = selectElement.value;
-        if (!selectedValue) return alert("メニューを選んでください！");
-        if (selectedMenus.length >= 3) return alert("メニューは最大3つまでです！");
+        if (!selectedValue) return alert("メニューをお選びください。");
+        if (selectedMenus.length >= 5) return alert("メニューは最大5つまでとさせていただきます。");
         const [name, timeString] = selectedValue.split(",");
         selectedMenus.push({ name: name, time: parseInt(timeString, 10) });
         selectElement.value = "";
