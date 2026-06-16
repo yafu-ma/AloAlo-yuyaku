@@ -197,7 +197,7 @@
 
         const menuNames = selectedMenus.map(item => item.name).join(" ＋ ");
         const totalTime = document.getElementById("page2TotalTime").innerText;
-        const sendText = `【予約リクエスト】\n日時: ${date} ${time}〜\nメニュー: ${menuNames}\n所要時間: 約${totalTime}分(カウンセリング込)\n\n※この内容で予約をお願いします！`;
+        const sendText = `【予約リクエスト】\n日時: ${date} ${time}〜\nメニュー: ${menuNames}\n所要時間: 約${totalTime}分(カウンセリング込)\n`;
 
         if (!liff.isInClient()) {
           return alert("【テスト用】\n\n" + sendText);
