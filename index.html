@@ -203,9 +203,15 @@
         if (!date || !time) return alert("日付と時間を選択してください！");
         const today = new Date().toISOString().split('T')[0];
         if (date < today) return alert("過去の日付は選択できません。");
-        const menuNames = selectedMenus.map(item => item.name).join(" ＋ ");
+        const menuNames = selectedMenus.map(item => {
+          let nameText = item.name;
+          if (item.name === "ドームサウナ" || item.name === "ペアドーム") {
+            nameText = `${item.name}(${item.time}分)`;
+          }
+            return `・${nameText}`;;
+          }).join("\n");
         const totalTime = document.getElementById("page2TotalTime").innerText;
-        const sendText = `【予約リクエスト】\nお名前: ${userName} 様\n日時: ${date} ${time}〜\nメニュー: ${menuNames}\n所要時間: 約${totalTime}分(カウンセリング込)`;
+        const sendText = `【予約リクエスト】\nお名前: ${userName} 様\n日時: ${date} ${time}〜\nメニュー: \n${menuNames}\n所要時間: 約${totalTime}分(カウンセリング込)`;
 
         if (!liff.isInClient()) {
           return alert("【テスト用】\n\n" + sendText);
