@@ -26,6 +26,10 @@
     <div id="page1" class="page active-page">
       <h2>AloAlo 予約メニュー選択</h2>
       <div class="box">
+        <label for="userNameInput"><strong>お名前：</strong></label>
+        <input type="text" id="userNameInput" placeholder="お名前を入力してください。">
+      </div>
+      <div class="box">
         <p>ご希望のメニューを選んで追加してください<br><small>※最大5つまで</small></p>
         <select id="menuSelect">
           <option value="" disabled selected>メニューを選択してください</option>
@@ -191,6 +195,9 @@
           return alert("LIFFがまだ初期化されていません。少し待ってから再度押してください。");
         }
 
+        const userName = document.getElementById("userNameInput").value.trim();
+        if (!userName) return alert("お名前を入力してください。");
+
         const date = document.getElementById("dateInput").value;
         const time = document.getElementById("timeInput").value;
         if (!date || !time) return alert("日付と時間を選択してください！");
@@ -198,7 +205,7 @@
         if (date < today) return alert("過去の日付は選択できません。");
         const menuNames = selectedMenus.map(item => item.name).join(" ＋ ");
         const totalTime = document.getElementById("page2TotalTime").innerText;
-        const sendText = `【予約リクエスト】\n日時: ${date} ${time}〜\nメニュー: ${menuNames}\n所要時間: 約${totalTime}分(カウンセリング込)`;
+        const sendText = `【予約リクエスト】\nお名前: ${userName} 様\n日時: ${date} ${time}〜\nメニュー: ${menuNames}\n所要時間: 約${totalTime}分(カウンセリング込)`;
 
         if (!liff.isInClient()) {
           return alert("【テスト用】\n\n" + sendText);
